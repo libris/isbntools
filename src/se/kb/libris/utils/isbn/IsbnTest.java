@@ -16,6 +16,16 @@ package se.kb.libris.utils.isbn;
 public class IsbnTest {
     /** Creates a new instance of IsbnTest */
     public static void main(String args[]) throws Exception {
-       System.out.println(IsbnParser.parse("9781412950763").toString(true));
+	if (args.length == 1) {
+		System.out.println(IsbnParser.parse(args[0]).toString(false));
+		System.out.println(IsbnParser.parse(args[0]).toString(true));
+		System.out.println(IsbnParser.parse(args[0]).convert(Isbn.ISBN10).toString(false));
+		System.out.println(IsbnParser.parse(args[0]).convert(Isbn.ISBN10).toString(true));
+		System.out.println(IsbnParser.parse(args[0]).convert(Isbn.ISBN13).toString(false));
+		System.out.println(IsbnParser.parse(args[0]).convert(Isbn.ISBN13).toString(true));
+	} else {
+		System.out.println("usage: java se.kb.libris.utils.isbn.IsbnTest <isbn>");
+		System.exit(1);
+	}
     }
 }
