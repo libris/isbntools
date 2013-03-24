@@ -9,7 +9,7 @@
     <groupId>se.kb.libris</groupId>
     <artifactId>isbntools</artifactId>
     <packaging>jar</packaging>
-    <version>1.1</version>
+    <version>1.0</version>
     <name>LIBRIS IsbnTools</name>
     <developers>
         <developer>
