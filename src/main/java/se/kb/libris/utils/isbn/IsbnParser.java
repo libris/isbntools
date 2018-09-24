@@ -27,7 +27,6 @@ public class IsbnParser {
     
     public static void init() throws IOException {
         init(IsbnParser.class.getResourceAsStream("/isbn-ranges.txt"));
-        //System.out.println(IsbnParser.class.getResourceAsStream("/isbn-ranges.txt"));
     }
     
     public static void init(File file) throws IOException {
@@ -51,7 +50,7 @@ public class IsbnParser {
                 //    continue;
                 //}
                 
-                String country = line.substring(0, line.indexOf('-')), start = line.substring(line.indexOf('-')+1, line.indexOf('.')), stop = line.substring(line.indexOf('.')+1);
+                String country = line.substring(0, line.indexOf(' ')), start = line.substring(line.indexOf(' ')+1, line.indexOf('-')), stop = line.substring(line.indexOf('-')+1);
 
                 Vector v = (Vector)countries.get(country);
 
@@ -70,19 +69,20 @@ public class IsbnParser {
     
     public static Isbn parse (String isbn) throws IsbnException {
         String country = null;
-        boolean isbn13 = false;
+	boolean isbn10 = false;
         
         try {
             if (countries == null) init();
 
             isbn = scrub(isbn, "-");
             
-            isbn13 = (isbn.length() == 13);
-            
-            if (isbn13 && (isbn.startsWith("978"))) isbn = isbn.substring(3);
+            if ( isbn.length() == 10 ) {
+			isbn = "978" + isbn;
+			isbn10 = true;
+            }
 
             // 1) find country
-            for (int i=1;i<isbn.length();i++) {
+            for (int i=4;i<isbn.length();i++) {
                 if (countries.get(isbn.substring(0,i)) != null) {
                     country = isbn.substring(0,i);
                 }
@@ -107,7 +107,7 @@ public class IsbnParser {
 
             num = tmp.substring(pprefix.length(), tmp.length());
 
-            if (isbn13) country = "978" + country;
+            if (isbn10) country = country.substring(3);
             
             return new Isbn(country, pprefix, num);
         } catch (Exception e) {

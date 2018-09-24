@@ -90,7 +90,7 @@ public class Isbn {
     
     public String toString(boolean hyphens) {
         if (hyphens) {
-            if (type == ISBN13 && (country.startsWith("978") || country.startsWith("979"))) {
+            if (type == ISBN13) {
                 return country.substring(0,3) + '-' + country.substring(3) + '-' + publisher + '-' + number + '-' + checksum();
             } else {
                 return country + '-' + publisher + '-' + number + '-' + checksum();
