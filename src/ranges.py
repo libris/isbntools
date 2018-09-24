@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# OBS! Deprecated, ranges.js not found
+
 import sys
 import string
 import urllib
